@@ -1,3 +1,3 @@
 function toastrInfo() {
-    toastr.error("暂未开发","error");
+    toastr.warning("暂未开发");
 }
