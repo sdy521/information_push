@@ -65,7 +65,7 @@
             <button type="submit" lay-submit lay-filter="sub" class="layui-btn">注册</button>
         </div>
         <hr style="width: 85%" />
-        <p style="width: 85%"><a href="/login" class="fl">已有账号？立即登录</a><a href="javascript:;" class="fr">忘记密码？</a></p>
+        <p style="width: 85%"><a href="/login" class="fl">已有账号？立即登录</a><#--<a href="javascript:;" class="fr">忘记密码？</a>--></p>
     </form>
 </div>
 
@@ -136,23 +136,7 @@
         //
         //添加表单监听事件,提交注册信息
         form.on('submit(sub)', function() {
-            $.ajax({
-                url:'reg.php',
-                type:'post',
-                dataType:'text',
-                data:{
-                    user:$('#user').val(),
-                    pwd:$('#pwd').val(),
-                },
-                success:function(data){
-                    if (data == 1) {
-                        layer.msg('注册成功');
-                        ///location.href = "login.html";
-                    }else {
-                        layer.msg('注册失败');
-                    }
-                }
-            })
+            layer.msg('注册功能暂未开放');
             //防止页面跳转
             return false;
         });
