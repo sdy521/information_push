@@ -71,7 +71,7 @@ public class WebSocket {
     public void GroupSending(String message){
         for (String name : webSocketSet.keySet()){
             try {
-                webSocketSet.get(name).session.getBasicRemote().sendText(message);
+                webSocketSet.get(name).session.getBasicRemote().sendText("service返回信息:"+message);
             }catch (Exception e){
                 e.printStackTrace();
             }
