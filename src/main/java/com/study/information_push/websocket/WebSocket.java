@@ -10,6 +10,8 @@ import javax.websocket.OnOpen;
 import javax.websocket.Session;
 import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -48,7 +50,14 @@ public class WebSocket {
 
     @OnClose
     public void OnClose(){
-        webSocketSet.remove(this);
+        Map<String, List<String>> paramMap = session.getRequestParameterMap();
+        if(paramMap!=null){
+            for (Map.Entry<String,List<String>> entry : paramMap.entrySet()){
+                String key = entry.getKey();
+                String value = entry.getValue().get(0);
+                webSocketSet.remove(value);
+            }
+        }
         log.info("[WebSocket] 退出成功，当前连接人数为：={}",webSocketSet.size());
     }
 
