@@ -35,6 +35,34 @@ public abstract class BaseService<T extends BaseEntity> {
     }
 
     /***
+     * 查询一个
+     * @param recoad
+     * @return
+     */
+    public T selectOne(T recoad){
+        return getDao().selectOne(recoad);
+    }
+
+    /***
+     * 根据主键更新属性不为null的值
+     * @param recoad
+     */
+    public Integer updateByPrimaryKeySelective(T recoad){
+        saveBaseInfo(recoad);
+        getDao().updateByPrimaryKeySelective(recoad);
+        return recoad.getId();
+    }
+
+    /***
+     * 删除  实际是更新
+     * @param recoad
+     */
+    public void delete(T recoad){
+        saveBaseInfo(recoad);
+        recoad.setDeleted(true);
+        getDao().updateByPrimaryKeySelective(recoad);
+    }
+    /***
      * 根据条件查询
      * @param recoad
      * @return

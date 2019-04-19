@@ -5,3 +5,5 @@
     <link rel="stylesheet" href="/static/css/layui.css">
     <#--toastr 通知插件-->
     <link rel="stylesheet" href="/static/plugin/toastr/css/toastr.min.css">
+    <#--bootstrap-->
+    <link rel="stylesheet" href="/static/plugin/bootStrap/bootstrap.min.css">

@@ -2,7 +2,10 @@ package com.study.information_push.dao;
 
 import com.study.information_push.core.BaseDao;
 import com.study.information_push.entity.PushConfig;
+import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 /**
  * @author sdy
@@ -10,4 +13,7 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public interface PushConfigDao extends BaseDao<PushConfig> {
+
+    @Select("select * from push_config where deleted=0")
+    List<PushConfig> selectAll();
 }
