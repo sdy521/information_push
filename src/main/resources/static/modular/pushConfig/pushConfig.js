@@ -1,68 +1,55 @@
 
 layui.use('table', function(){
     var table = layui.table;
-
         table.render({
         elem: '#tableId'
         ,url:'/push_config/layuiTable'
-        ,toolbar: '#toolbar'
+        ,toolbar: 'default'
         ,title: '用户数据表'
+        // ,totalRow: true //开启合计行
         ,cols: [[
             {type: 'checkbox', fixed: 'left'}
-            ,{field:'id', title:'ID', width:80, fixed: 'left', unresize: true, sort: true}
-            ,{field:'username', title:'用户名', width:120, edit: 'text'}
-            ,{field:'email', title:'邮箱', width:150, edit: 'text', templet: function(res){
-                    return '<em>'+ res.email +'</em>'
-                }}
-            ,{field:'sex', title:'性别', width:80, edit: 'text', sort: true}
-            ,{field:'city', title:'城市', width:100}
-            ,{field:'sign', title:'签名'}
-            ,{field:'experience', title:'积分', width:80, sort: true}
-            ,{field:'ip', title:'IP', width:120}
-            ,{field:'logins', title:'登入次数', width:100, sort: true}
-            ,{field:'joinTime', title:'加入时间', width:120}
-            ,{fixed: 'right', title:'操作', toolbar: '#rightbar', width:150}
+            ,{field:'id', title:'ID', width:'10%', fixed: 'left', unresize: true, sort: true}
+            ,{field:'url', title:'地址', width:'20%'/*, edit: 'text'*/}
+            ,{field:'method', title:'方法', width:'15%'/*, edit: 'text'*/}
+            ,{field:'createBy', title:'创建人', width:'10%'}
+            ,{field:'updateBy', title:'修改人', width:'10%'}
+            ,{field:'createTime', title:'创建时间',width:'15%',}
+            ,{field:'updateTime', title:'修改时间', width:'15%', sort: true}
+           /* ,{field:'deleted', title:'是否删除', width:'10%',templet:function (res) {
+                        var del = res.deleted;
+                        if(del===false){
+                            return '未删除';
+                        }else{
+                            return '已删除';
+                        }
+                    }}*/
         ]]
         ,page: true
     });
-
-    //头工具栏事件
+    //监听头工具栏事件
     table.on('toolbar(tableId)', function(obj){
-        var checkStatus = table.checkStatus(obj.config.id);
+        var checkStatus = table.checkStatus(obj.config.id),data = checkStatus.data; //获取选中的数据
         switch(obj.event){
-            case 'getCheckData':
-                var data = checkStatus.data;
-                layer.alert(JSON.stringify(data));
+            case 'add':
+                layer.msg('添加');
                 break;
-            case 'getCheckLength':
-                var data = checkStatus.data;
-                layer.msg('选中了：'+ data.length + ' 个');
+            case 'update':
+                if(data.length === 0){
+                    layer.msg('请选择一行');
+                } else if(data.length > 1){
+                    layer.msg('只能同时编辑一个');
+                } else {
+                    layer.alert('编辑 [id]：'+ checkStatus.data[0].id);
+                }
                 break;
-            case 'isAll':
-                layer.msg(checkStatus.isAll ? '全选': '未全选');
+            case 'delete':
+                if(data.length === 0){
+                    layer.msg('请选择一行');
+                } else {
+                    layer.msg('删除');
+                }
                 break;
         };
-    });
-
-    //监听行工具事件
-    table.on('tool(tableId)', function(obj){
-        var data = obj.data;
-        //console.log(obj)
-        if(obj.event === 'del'){
-            layer.confirm('真的删除行么', function(index){
-                obj.del();
-                layer.close(index);
-            });
-        } else if(obj.event === 'edit'){
-            layer.prompt({
-                formType: 2
-                ,value: data.email
-            }, function(value, index){
-                obj.update({
-                    email: value
-                });
-                layer.close(index);
-            });
-        }
     });
 });
