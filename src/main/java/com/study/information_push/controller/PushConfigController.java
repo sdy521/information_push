@@ -1,22 +1,17 @@
 package com.study.information_push.controller;
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageInfo;
-import com.study.information_push.core.JSONResult;
-import com.study.information_push.core.LayuiPageParam;
-import com.study.information_push.core.PageResult;
-import com.study.information_push.core.Result;
+import com.study.information_push.core.*;
 import com.study.information_push.entity.PushConfig;
 import com.study.information_push.service.PushConfigService;
+import com.study.information_push.util.RedisUtil;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @Author: Sdy
@@ -87,12 +82,34 @@ public class PushConfigController {
      * 添加配置
      * @return
      */
-    @RequestMapping("/delete")
+    @RequestMapping(value = "/delete",method = RequestMethod.POST)
     @ResponseBody
-    public Result delete(@RequestParam Integer id){
-        PushConfig pushConfig = new PushConfig();
-        pushConfig.setId(id);
-        pushConfigService.delete(pushConfig);
+    public Result delete(Integer[] ids){
+        for(int i=0;i<ids.length;i++){
+            Integer id = ids[i];
+            PushConfig pushConfig = new PushConfig();
+            pushConfig.setId(id);
+            pushConfigService.delete(pushConfig);
+        }
         return new Result();
+    }
+
+    /***
+     * 实时查询redis
+     * @return
+     */
+    @RequestMapping(value = "/getRedis")
+    @ResponseBody
+    public Result getRedis(){
+        if(RedisUtil.HASKEY(Constants.USER_WEBSOCKET)){
+            Set<Object> set = (HashSet<Object>)RedisUtil.MEMBERS(Constants.USER_WEBSOCKET).stream().findFirst().get();
+            if(set!=null&&set.size()>0){
+                return new JSONResult(set.size());
+            }else {
+                return new JSONResult(0);
+            }
+        }else {
+            return new JSONResult(0);
+        }
     }
 }

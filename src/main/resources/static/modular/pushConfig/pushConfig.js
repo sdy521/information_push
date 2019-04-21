@@ -16,8 +16,8 @@ layui.use('table', function(){
             ,{field:'method', title:'方法', width:'15%'/*, edit: 'text'*/}
             ,{field:'createBy', title:'创建人', width:'10%',templet:"#UserName"}
             ,{field:'updateBy', title:'修改人', width:'10%',templet:"#Username"}
-            ,{field:'createTime', title:'创建时间',width:'15%',}
-            ,{field:'updateTime', title:'修改时间', width:'15%', sort: true}
+            ,{field:'createTime', title:'创建时间',width:'15%',templet:'<div>{{FormatDate(d.createTime)}}</div>'}
+            ,{field:'updateTime', title:'修改时间', width:'15%', sort: true,templet:'<div>{{FormatDate(d.updateTime)}}</div>'}
            /* ,{field:'deleted', title:'是否删除', width:'10%',templet:function (res) {
                         var del = res.deleted;
                         if(del===false){
@@ -28,6 +28,11 @@ layui.use('table', function(){
                     }}*/
         ]]
         ,page: true
+        ,done:function () {
+            interval = setInterval(function () {
+                PushConfig.selectRedis();
+            },3000);
+        }
     });
     //监听头工具栏事件
     PushConfig.table.on('toolbar(tableId)', function(obj){
@@ -69,11 +74,17 @@ layui.use('table', function(){
                     layer.confirm('确定删除吗？', {
                         btn: ['确定','取消'] //按钮
                     }, function(){
-                        var id = checkStatus.data[0].id;
+                        var idArray = new Array();
+                        var datas = checkStatus.data;
+                        for(var i=0;i<datas.length;i++){
+                            idArray.push(parseInt(datas[i].id));
+                        }
                         $.ajax({
-                            url:"/push_config/delete?id="+id,
-                            type:"GET",
+                            url:"/push_config/delete",
+                            type:"POST",
+                            data:{ids:idArray},
                             dataType:"JSON",
+                            traditional: true,//解决传递数组的问题
                             success:function (r) {
                                 if(r.code===0){
                                     PushConfig.reloadTable();
@@ -121,7 +132,19 @@ PushConfig.edit = function () {
         }
     });
 }
-
+//查询redis
+PushConfig.selectRedis = function(){
+    $.ajax({
+        url:"/push_config/getRedis",
+        type:"GET",
+        dataType:"JSON",
+        success:function (r) {
+            if(r.code===0){
+                $(".layui-elem-field").find("legend").find("strong").html(r.data);
+            }
+        }
+    });
+}
 //添加确定
 PushConfig.insert = function () {
     var url = $("#create-form").find("input[name='url']").val();

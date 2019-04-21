@@ -32,3 +32,16 @@ laytpl 是 JavScript 模板引擎，在字符解析上有着比较出色的表�
     });
 }}
 </script>
+<script type="text/html" id="createTimeTemplet">
+{{#
+    var createTime = d.createTime;
+    var date = new Date(createTime);
+    var year = date.getFullYear(),
+    month = date.getMonth() + 1,//月份是从0开始的
+    day = date.getDate(),
+    hour = date.getHours(),
+    min = date.getMinutes(),
+    sec = date.getSeconds();
+    return year+'/'+month+'/'+day;
+}}
+</script>

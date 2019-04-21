@@ -8,10 +8,10 @@
     <#include "/templates/layout/head.ftl">
     <#include "/templates/layout/left.ftl">
     <div class="layui-body">
-        <div style="padding: 15px;">
-            <!-- 内容主体区域 -->
-            <table class="layui-hide" id="tableId" lay-filter="tableId"></table>
-        </div>
+        <fieldset class="layui-elem-field" style="margin-top: 15px;">
+            <legend>在线人数：<strong>0</strong>人</legend>
+        </fieldset>
+        <table class="layui-hide" id="tableId" lay-filter="tableId"></table>
     </div>
     <#include "/templates/layout/foot.ftl">
 </div>

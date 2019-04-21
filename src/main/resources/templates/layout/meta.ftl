@@ -7,3 +7,5 @@
     <link rel="stylesheet" href="/static/plugin/toastr/css/toastr.min.css">
     <#--bootstrap-->
     <link rel="stylesheet" href="/static/plugin/bootStrap/bootstrap.min.css">
+
+    <link rel="stylesheet" href="/static/css/style.css">

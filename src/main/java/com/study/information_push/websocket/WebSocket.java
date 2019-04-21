@@ -1,5 +1,7 @@
 package com.study.information_push.websocket;
 
+import com.study.information_push.core.Constants;
+import com.study.information_push.util.RedisUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -10,9 +12,12 @@ import javax.websocket.OnOpen;
 import javax.websocket.Session;
 import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Collectors;
 
 /**
  * @author sdy
@@ -27,7 +32,6 @@ import java.util.concurrent.ConcurrentHashMap;
 @Component
 @ServerEndpoint("/websocket/{name}")
 public class WebSocket {
-
     /**
      *  与某个客户端的连接对话，需要通过它来给客户端发送消息
      */
@@ -45,17 +49,38 @@ public class WebSocket {
         this.session = session;
         // name是用来表示唯一客户端，如果需要指定发送，需要指定发送通过name来区分
         webSocketSet.put(name,this);
+        //存入redis
+        String key = Constants.USER_WEBSOCKET;
+        if(RedisUtil.HASKEY(key)){
+            //不存在该用户  需要再次添加
+           if(!RedisUtil.ISMEMBER(key,name)){
+               Set<Object> setRedis = RedisUtil.MEMBERS(key);
+               Set<Object> set = (HashSet<Object>)setRedis.stream().findFirst().get();
+               set.add(name);
+               RedisUtil.DEL(key);
+               RedisUtil.ADDSET(key,set);
+           }
+        }else {
+            Set<Object> set = new HashSet<Object>();
+            set.add(name);
+            RedisUtil.ADDSET(key,set);
+        }
         log.info("[WebSocket] 连接成功，当前连接人数为：={}",webSocketSet.size());
     }
 
     @OnClose
     public void OnClose(){
         Map<String, List<String>> paramMap = session.getRequestParameterMap();
+        String key = Constants.USER_WEBSOCKET;
         if(paramMap!=null){
             for (Map.Entry<String,List<String>> entry : paramMap.entrySet()){
-                String key = entry.getKey();
                 String value = entry.getValue().get(0);
                 webSocketSet.remove(value);
+                //删除redis
+                Set<Object> set = (HashSet<Object>)RedisUtil.MEMBERS(key).stream().findFirst().get();
+                set = set.stream().filter(o -> !o.equals(value)).collect(Collectors.toSet());
+                RedisUtil.DEL(key);
+                RedisUtil.ADDSET(key,set);
             }
         }
         log.info("[WebSocket] 退出成功，当前连接人数为：={}",webSocketSet.size());
