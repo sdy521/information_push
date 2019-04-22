@@ -1,9 +1,9 @@
 package com.study.information_push.security;
 
-import com.study.information_push.dao.RolesDao;
-import com.study.information_push.dao.UserDao;
-import com.study.information_push.entity.Role;
-import com.study.information_push.entity.User;
+import com.study.information_push.dao.first.RolesDao;
+import com.study.information_push.dao.first.UserDao;
+import com.study.information_push.entity.first.Role;
+import com.study.information_push.entity.first.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

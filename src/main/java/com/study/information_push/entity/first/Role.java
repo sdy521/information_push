@@ -1,4 +1,4 @@
-package com.study.information_push.entity;
+package com.study.information_push.entity.first;
 //角色表
 
 import javax.persistence.GeneratedValue;

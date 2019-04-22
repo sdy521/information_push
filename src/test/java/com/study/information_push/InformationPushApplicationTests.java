@@ -1,6 +1,6 @@
 package com.study.information_push;
 
-import com.study.information_push.dao.UserDao;
+import com.study.information_push.dao.first.UserDao;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;

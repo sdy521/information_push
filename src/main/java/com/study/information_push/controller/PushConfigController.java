@@ -1,10 +1,8 @@
 package com.study.information_push.controller;
 
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageInfo;
 import com.study.information_push.core.*;
-import com.study.information_push.entity.PushConfig;
+import com.study.information_push.entity.first.PushConfig;
 import com.study.information_push.service.PushConfigService;
 import com.study.information_push.util.RedisUtil;
 import org.springframework.stereotype.Controller;

@@ -1,7 +1,7 @@
-package com.study.information_push.dao;
+package com.study.information_push.dao.first;
 
 import com.study.information_push.core.BaseDao;
-import com.study.information_push.entity.User;
+import com.study.information_push.entity.first.User;
 import org.springframework.stereotype.Component;
 
 /**

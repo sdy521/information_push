@@ -1,7 +1,7 @@
-package com.study.information_push.dao;
+package com.study.information_push.dao.first;
 
 
-import com.study.information_push.entity.Role;
+import com.study.information_push.entity.first.Role;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Component;

@@ -4,8 +4,8 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.study.information_push.core.BaseDao;
 import com.study.information_push.core.LayuiPageParam;
-import com.study.information_push.dao.PushConfigDao;
-import com.study.information_push.entity.PushConfig;
+import com.study.information_push.dao.first.PushConfigDao;
+import com.study.information_push.entity.first.PushConfig;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
