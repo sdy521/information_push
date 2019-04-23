@@ -12,20 +12,21 @@ layui.use('table', function(){
         ,cols: [[
             {type: 'checkbox', fixed: 'left'}
             ,{field:'id', title:'ID', width:'10%', fixed: 'left', unresize: true, sort: true}
-            ,{field:'url', title:'地址', width:'20%'/*, edit: 'text'*/}
-            ,{field:'method', title:'方法', width:'15%'/*, edit: 'text'*/}
-            ,{field:'createBy', title:'创建人', width:'10%',templet:"#UserName"}
-            ,{field:'updateBy', title:'修改人', width:'10%',templet:"#Username"}
-            ,{field:'createTime', title:'创建时间',width:'15%',templet:'<div>{{FormatDate(d.createTime)}}</div>'}
-            ,{field:'updateTime', title:'修改时间', width:'15%', sort: true,templet:'<div>{{FormatDate(d.updateTime)}}</div>'}
-           /* ,{field:'deleted', title:'是否删除', width:'10%',templet:function (res) {
-                        var del = res.deleted;
-                        if(del===false){
-                            return '未删除';
-                        }else{
-                            return '已删除';
+            ,{field:'name', title:'姓名', width:'20%'/*, edit: 'text'*/}
+            ,{field:'type', title:'职位', width:'15%',templet:function (res) {
+                        var type = res.type;
+                        if(type==0){
+                            return "管理员";
+                        }else if(type==1){
+                            return "老师";
+                        }else if(type==2){
+                            return "学生";
                         }
-                    }}*/
+                    }}
+           /* ,{field:'createBy', title:'创建人', width:'10%',templet:"#UserName"}
+            ,{field:'updateBy', title:'修改人', width:'10%',templet:"#Username"}*/
+            ,{field:'createTime', title:'创建时间',width:'15%',templet:'<div>{{dateFtt(yyyy-MM-dd,d.createTime)}}</div>'}
+            ,{field:'updateTime', title:'修改时间', width:'15%', sort: true,templet:"<div>{{dateFtt('yyyy-MM-dd',d.updateTime)}}</div>"}
         ]]
         ,page: true
         ,done:function () {
