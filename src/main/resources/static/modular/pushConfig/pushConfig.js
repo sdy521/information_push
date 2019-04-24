@@ -119,4 +119,15 @@ PushConfig.selectRedis = function(){
 //推送
 PushConfig.send = function () {
     var userid = $("#userid").val();
+    var content = $("#noticeId option:selected").text();
+    $.ajax({
+        url:"/ws/sendNotice?userid="+userid+"&content="+content,
+        type:"GET",
+        dataType:"JSON",
+        success:function (r) {
+            if(r.code===0){
+                alert("推送成功");
+            }
+        }
+    });
 }

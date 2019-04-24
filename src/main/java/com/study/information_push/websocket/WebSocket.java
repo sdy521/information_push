@@ -89,13 +89,6 @@ public class WebSocket {
     @OnMessage
     public void OnMessage(String message){
         log.info("[WebSocket] 收到消息：{}",message);
-        //判断是否需要指定发送，具体规则自定义
-        if(message.indexOf("TOUSER") == 0){
-            String name = message.substring(message.indexOf("TOUSER")+6,message.indexOf(";"));
-            AppointSending(name,message.substring(message.indexOf(";")+1,message.length()));
-        }else{
-            GroupSending(message);
-        }
     }
 
     /**
