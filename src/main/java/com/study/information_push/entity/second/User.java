@@ -1,9 +1,17 @@
 package com.study.information_push.entity.second;
 
+import com.study.information_push.entity.BaseEntity;
 import javax.persistence.Column;
-
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import java.util.Date;
 public class User extends BaseEntity {
 
+    @Id
+    //tk.mybatis只能用这一种主键生成策略
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
     @Column
     private String name;
     @Column
@@ -22,6 +30,14 @@ public class User extends BaseEntity {
 
     @Column
     private String img;
+
+    //字段不能更新
+    @Column(updatable = false)
+    private Date createTime;
+    @Column
+    private Date updateTime;
+    @Column
+    private Boolean deleted=false;
 
     public String getName() {
         return name;
@@ -61,5 +77,44 @@ public class User extends BaseEntity {
 
     public void setImg(String img) {
         this.img = img;
+    }
+
+    @Override
+    public Integer getId() {
+        return id;
+    }
+
+    @Override
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    @Override
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    @Override
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    @Override
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    @Override
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
+    }
+
+    public Boolean getDeleted() {
+        return deleted;
+    }
+
+    @Override
+    public void setDeleted(Boolean deleted) {
+        this.deleted = deleted;
     }
 }

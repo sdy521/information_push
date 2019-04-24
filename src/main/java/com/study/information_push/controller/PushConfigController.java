@@ -29,7 +29,21 @@ public class PushConfigController {
     @RequestMapping("/layuiTable")
     @ResponseBody
     public Result layuiTable(LayuiPageParam pageParam){
-        PageInfo<User> pageInfo = pushConfigService.seletAll(pageParam);
+        String ids = "";
+        PageInfo<User> pageInfo = null;
+        if(RedisUtil.HASKEY(Constants.USER_WEBSOCKET)){
+            Set<Object> set = (HashSet<Object>)RedisUtil.MEMBERS(Constants.USER_WEBSOCKET).stream().findFirst().get();
+            if(set!=null&&set.size()>0){
+                for(Object id : set){
+                    ids += id+",";
+                }
+                pageInfo = pushConfigService.selectByIds(pageParam,ids.substring(0,ids.length()-1));
+            }else {
+                pageInfo = pushConfigService.selectByIds(pageParam,"0");
+            }
+        }else {
+            pageInfo = pushConfigService.selectByIds(pageParam,"0");
+        }
         return new PageResult(pageInfo.getList(),pageInfo.getTotal());
     }
 

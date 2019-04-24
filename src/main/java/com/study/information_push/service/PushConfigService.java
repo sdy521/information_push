@@ -20,9 +20,9 @@ public class PushConfigService{
     private UserDao2 userDao2;
 
 
-    public PageInfo<User> seletAll(LayuiPageParam pageParam){
+    public PageInfo<User> selectByIds(LayuiPageParam pageParam,String ids){
         PageHelper.startPage(pageParam.getPage(),pageParam.getLimit());
-        List<User> list = userDao2.selectAll();
+        List<User> list = userDao2.selectByIds(ids);
         return new PageInfo<User>(list);
     }
 }

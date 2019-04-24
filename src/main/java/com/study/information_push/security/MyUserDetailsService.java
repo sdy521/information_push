@@ -25,9 +25,7 @@ public class MyUserDetailsService implements UserDetailsService {
     private RolesDao rolesDao;
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User select = new User();
-        select.setName(username);
-        User user = userDao.selectOne(select);
+        User user = userDao.selectOneByName(username);
         if (user == null) {
             throw new UsernameNotFoundException("用户名：" + username + "不存在");
         }

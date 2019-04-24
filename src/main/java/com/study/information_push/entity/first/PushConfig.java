@@ -1,12 +1,14 @@
 package com.study.information_push.entity.first;
 
+import com.study.information_push.entity.BaseEntity;
+
 import javax.persistence.Column;
 
 /**
  * @author sdy
  * @date 2019/4/19 9:44
  */
-public class PushConfig extends BaseEntity{
+public class PushConfig extends BaseEntity {
     @Column
     private String url;
     @Column

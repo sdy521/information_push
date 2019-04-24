@@ -1,4 +1,4 @@
-package com.study.information_push.entity.first;
+package com.study.information_push.entity;
 
 import org.apache.ibatis.annotations.Update;
 

@@ -1,7 +1,7 @@
 package com.study.information_push.service;
 
 import com.study.information_push.core.BaseDao;
-import com.study.information_push.entity.first.BaseEntity;
+import com.study.information_push.entity.BaseEntity;
 import com.study.information_push.security.UserDetail;
 import com.study.information_push.util.SpringSecurity;
 import org.springframework.stereotype.Service;

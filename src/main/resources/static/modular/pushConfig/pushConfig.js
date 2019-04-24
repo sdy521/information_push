@@ -25,8 +25,8 @@ layui.use('table', function(){
                     }}
            /* ,{field:'createBy', title:'创建人', width:'10%',templet:"#UserName"}
             ,{field:'updateBy', title:'修改人', width:'10%',templet:"#Username"}*/
-            ,{field:'createTime', title:'创建时间',width:'15%',templet:'<div>{{dateFtt(yyyy-MM-dd,d.createTime)}}</div>'}
-            ,{field:'updateTime', title:'修改时间', width:'15%', sort: true,templet:"<div>{{dateFtt('yyyy-MM-dd',d.updateTime)}}</div>"}
+            ,{field:'createTime', title:'创建时间',width:'15%',templet:'<div>{{dateFtt(\'yyyy-MM-dd hh:mm:ss\',new Date(d.createTime))}}</div>'}
+            ,{field:'updateTime', title:'修改时间', width:'15%', sort: true,templet:"<div>{{dateFtt(\'yyyy-MM-dd hh:mm:ss\',new Date(d.updateTime))}}</div>"}
         ]]
         ,page: true
         ,done:function () {

@@ -29,8 +29,6 @@ public class CommonController {
     @RequestMapping("/getUserName")
     @ResponseBody
     public Result getUserName(@RequestParam Integer userid){
-        User user = new User();
-        user.setId(userid);
-        return new JSONResult(userDao.selectOne(user));
+        return new JSONResult(userDao.selectOneById(userid));
     }
 }
