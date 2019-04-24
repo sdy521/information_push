@@ -12,71 +12,38 @@
             <legend>在线人数：<strong>0</strong>人</legend>
         </fieldset>
         <table class="layui-hide" id="tableId" lay-filter="tableId"></table>
+        <script type="text/html" id="toolbarDemo"></script>
+
+        <script type="text/html" id="rightTool">
+            <a class="layui-btn layui-btn-xs" lay-event="send">推送</a>
+        </script>
     </div>
     <#include "/templates/layout/foot.ftl">
-</div>
-<#--新增弹框-->
-<div class="modal fade" id="createModal" tabindex="-1" role="dialog" aria-labelledby="modalTitle" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title" id="modalTitle">新增</h4>
-            </div>
-            <div class="modal-body">
-                <form class="form-horizontal" id="create-form">
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label">地址</label>
-                        <div class="col-sm-6">
-                            <input type="text" class="form-control" name="url">
+<#--推送弹框-->
+    <div class="modal fade" id="sendModal" tabindex="-1" role="dialog" aria-labelledby="modalTitle" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="modalTitle">推送信息</h4>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal" id="send-form">
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">菜单名称</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control" name="name">
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label">方法</label>
-                        <div class="col-sm-6">
-                            <input type="text" class="form-control" name="method">
-                        </div>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-sm btn-primary" onclick="PushConfig.insert();">确定</button>
-                <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">关闭</button>
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal -->
-</div>
-<#--修改弹框-->
-<div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="modalTitle" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title" id="modalTitle">修改</h4>
-            </div>
-            <div class="modal-body">
-                <form class="form-horizontal" id="update-form">
-                    <input type="hidden" name="configId">
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label">地址</label>
-                        <div class="col-sm-6">
-                            <input type="text" class="form-control" name="url">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-3 control-label">方法</label>
-                        <div class="col-sm-6">
-                            <input type="text" class="form-control" name="method">
-                        </div>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-sm btn-primary" onclick="PushConfig.edit();">确定</button>
-                <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">关闭</button>
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal -->
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-sm btn-primary" onclick="">确定</button>
+                    <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">关闭</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal -->
+    </div>
 </div>
 </body>
 <#include "/templates/templet.ftl">

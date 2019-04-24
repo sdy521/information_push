@@ -48,64 +48,6 @@ public class PushConfigController {
     }
 
     /***
-     * 编辑界面
-     * @return
-     */
-   /* @RequestMapping("/editModal")
-    @ResponseBody
-    public Result editModal(@RequestParam Integer id){
-        PushConfig pushConfig = new PushConfig();
-        pushConfig.setId(id);
-        PushConfig pc = pushConfigService.selectOne(pushConfig);
-        return new JSONResult(pc);
-    }*/
-
-    /***
-     * 编辑确认
-     * @return
-     */
-   /* @RequestMapping("/edit")
-    @ResponseBody
-    public Result edit(@RequestParam Integer id,@RequestParam String url,@RequestParam String method){
-        PushConfig pushConfig = new PushConfig();
-        pushConfig.setId(id);
-        pushConfig.setUrl(url);
-        pushConfig.setMethod(method);
-        pushConfigService.updateByPrimaryKeySelective(pushConfig);
-        return new Result();
-    }*/
-
-    /***
-     * 添加配置
-     * @return
-     */
-    /*@RequestMapping("/insert")
-    @ResponseBody
-    public Result insert(@RequestParam String url,@RequestParam String method){
-        PushConfig pushConfig = new PushConfig();
-        pushConfig.setUrl(url);
-        pushConfig.setMethod(method);
-        pushConfigService.insert(pushConfig);
-        return new Result();
-    }*/
-
-    /***
-     * 添加配置
-     * @return
-     */
-    /*@RequestMapping(value = "/delete",method = RequestMethod.POST)
-    @ResponseBody
-    public Result delete(Integer[] ids){
-        for(int i=0;i<ids.length;i++){
-            Integer id = ids[i];
-            PushConfig pushConfig = new PushConfig();
-            pushConfig.setId(id);
-            pushConfigService.delete(pushConfig);
-        }
-        return new Result();
-    }*/
-
-    /***
      * 实时查询redis
      * @return
      */
