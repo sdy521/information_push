@@ -2,6 +2,8 @@ package com.study.information_push.controller;
 
 import com.github.pagehelper.PageInfo;
 import com.study.information_push.core.*;
+import com.study.information_push.dao.second.NoticeDao;
+import com.study.information_push.entity.second.Notice;
 import com.study.information_push.entity.second.User;
 import com.study.information_push.service.PushConfigService;
 import com.study.information_push.util.RedisUtil;
@@ -21,6 +23,8 @@ public class PushConfigController {
 
     @Resource
     private PushConfigService pushConfigService;
+    @Resource
+    private NoticeDao noticeDao;
     @RequestMapping("/list")
     public String list(){
         return "/modular/pushConfig/list";
@@ -63,6 +67,32 @@ public class PushConfigController {
             }
         }else {
             return new JSONResult(0);
+        }
+    }
+
+    /***
+     * 获取公告
+     * @return
+     */
+    @RequestMapping("/getNotice")
+    @ResponseBody
+    public Result getNotice(){
+        List<Notice> list = noticeDao.selectAll();
+       return new JSONResult(list);
+    }
+
+    /***
+     * 获取公告内容
+     * @return
+     */
+    @RequestMapping("/getNoticeContent")
+    @ResponseBody
+    public Result getNoticeContent(@RequestParam Integer id){
+        if(id!=null){
+            Notice notice = noticeDao.selectOne(id);
+            return new JSONResult(notice);
+        }else {
+            return new Result(1,"");
         }
     }
 }

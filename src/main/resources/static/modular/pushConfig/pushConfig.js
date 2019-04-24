@@ -1,8 +1,11 @@
 var PushConfig ={
-    table:null
+    table:null,
+    layedit:null
 }
-layui.use('table', function(){
+
+layui.use(['table','layedit'], function(){
     PushConfig.table = layui.table;
+    PushConfig.layedit = layui.layedit;
     PushConfig.table.render({
         elem: '#tableId'
         ,url:'/push_config/layuiTable'
@@ -37,12 +40,53 @@ layui.use('table', function(){
     });
     //监听行工具事件
     PushConfig.table.on('tool(tableId)', function(obj){
-        var data = obj.data;
         if(obj.event === 'send'){
-            $("#sendModal").modal();
+            var data = obj.data;
+            $("#userid").val(data.id);
+            $("#noticeId").empty();
+            $.ajax({
+                url:"/push_config/getNotice",
+                type:"GET",
+                dataType:"JSON",
+                success:function (r) {
+                    if(r.code===0){
+                        var data = r.data;
+                        var options="<option value=\"\">请选择公告</option>";
+                        for(var i=0;i<data.length;i++){
+                            options += "<option value=\""+data[i].id+"\">"+data[i].title+"</option>"
+                        }
+                        $("#noticeId").html(options);
+                        $("#sendModal").modal();
+                    }
+                }
+            });
         }
     });
+    //初始化编辑器
+    var index = PushConfig.layedit.build('noticeContent',{
+        height:150,
+        // contenteditable:'false'
+    });
+    //获取公告内容
+    PushConfig.getNoticeContent(index);
 });
+//获取公告内容
+PushConfig.getNoticeContent = function(index){
+    $("#noticeId").change(function () {
+       $.ajax({
+           url:"/push_config/getNoticeContent?id="+this.value,
+           type:"GET",
+           dataType:"JSON",
+           success:function (r) {
+               if(r.code===0){
+                   PushConfig.layedit.setContent(index,r.data.content);
+               }else {
+                   PushConfig.layedit.setContent(index,r.msg);
+               }
+           }
+       });
+    });
+}
 //执行重载
 PushConfig.reloadTable = function(){
     PushConfig.table.reload('tableId', {
@@ -70,4 +114,9 @@ PushConfig.selectRedis = function(){
             }
         }
     });
+}
+
+//推送
+PushConfig.send = function () {
+    var userid = $("#userid").val();
 }

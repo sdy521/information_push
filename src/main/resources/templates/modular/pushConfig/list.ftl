@@ -29,16 +29,20 @@
                 </div>
                 <div class="modal-body">
                     <form class="form-horizontal" id="send-form">
+                        <input type="hidden" id="userid">
                         <div class="form-group">
-                            <label class="col-sm-3 control-label">菜单名称</label>
+                            <label class="col-sm-2 control-label">选择公告</label>
                             <div class="col-sm-9">
-                                <input type="text" class="form-control" name="name">
+                                <select id="noticeId" class="form-control"></select>
                             </div>
                         </div>
                     </form>
+                    <form class="form-group">
+                        <textarea id="noticeContent" style="display: none;"></textarea>
+                    </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-sm btn-primary" onclick="">确定</button>
+                    <button type="button" class="btn btn-sm btn-primary" onclick="PushConfig.send();">推送</button>
                     <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">关闭</button>
                 </div>
             </div><!-- /.modal-content -->
