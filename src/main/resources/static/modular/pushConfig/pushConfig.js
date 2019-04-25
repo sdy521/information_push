@@ -38,6 +38,11 @@ layui.use(['table','layedit'], function(){
             },3000);
         }
     });
+    //初始化编辑器
+    var index = PushConfig.layedit.build('noticeContent',{
+        height:150,
+        // contenteditable:'false'
+    });
     //监听行工具事件
     PushConfig.table.on('tool(tableId)', function(obj){
         if(obj.event === 'send'){
@@ -56,16 +61,12 @@ layui.use(['table','layedit'], function(){
                             options += "<option value=\""+data[i].id+"\">"+data[i].title+"</option>"
                         }
                         $("#noticeId").html(options);
+                        PushConfig.layedit.setContent(index,"请选择公告...");
                         $("#sendModal").modal();
                     }
                 }
             });
         }
-    });
-    //初始化编辑器
-    var index = PushConfig.layedit.build('noticeContent',{
-        height:150,
-        // contenteditable:'false'
     });
     //获取公告内容
     PushConfig.getNoticeContent(index);
@@ -120,8 +121,9 @@ PushConfig.selectRedis = function(){
 PushConfig.send = function () {
     var userid = $("#userid").val();
     var content = $("#noticeId option:selected").text();
+    var radio = $("input:radio:checked").val();
     $.ajax({
-        url:"/ws/sendNotice?userid="+userid+"&content="+content,
+        url:"/ws/sendNotice?userid="+userid+"&content="+content+"&radio="+radio,
         type:"GET",
         dataType:"JSON",
         success:function (r) {

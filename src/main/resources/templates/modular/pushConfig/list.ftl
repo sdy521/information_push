@@ -2,6 +2,40 @@
 <html>
 <head>
     <#include "/templates/layout/meta.ftl">
+    <style>
+        input[type="radio"] {
+            width: 20px;
+            height: 20px;
+            opacity: 0;
+        }
+        .radio-inline label {
+            position: absolute;
+            left: 5px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            border: 1px solid #999;
+        }
+        /*设置选中的input的样式*/
+        /* + 是兄弟选择器,获取选中后的label元素*/
+        input:checked+label {
+            background-color: #fe6d32;
+            border: 1px solid #fe6d32;
+        }
+
+        input:checked+label::after {
+            position: absolute;
+            content: "";
+            width: 5px;
+            height: 10px;
+            top: 3px;
+            left: 6px;
+            border: 2px solid #fff;
+            border-top: none;
+            border-left: none;
+            transform: rotate(45deg)
+        }
+    </style>
 </head>
 <body class="layui-layout-body">
 <div class="layui-layout layui-layout-admin">
@@ -39,6 +73,23 @@
                     </form>
                     <form class="form-group">
                         <textarea id="noticeContent" style="display: none;"></textarea>
+                    </form>
+                    <form class="form-group">
+                        <div class="radio-inline">
+                            <input id="item1" type="radio" name="item" value="2">
+                            <label for="item1"></label>&nbsp;&nbsp;
+                            <span>紧急</span>
+                        </div>
+                        <div class="radio-inline">
+                            <input id="item2" type="radio" name="item" value="1">
+                            <label for="item2"></label>&nbsp;&nbsp;
+                            <span>重要</span>
+                        </div>
+                        <div class="radio-inline">
+                            <input id="item3" type="radio" name="item" value="0" checked>
+                            <label for="item3"></label>&nbsp;&nbsp;
+                            <span>一般</span>
+                        </div>
                     </form>
                 </div>
                 <div class="modal-footer">
