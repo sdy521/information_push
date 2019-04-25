@@ -126,7 +126,8 @@ PushConfig.send = function () {
         dataType:"JSON",
         success:function (r) {
             if(r.code===0){
-                alert("推送成功");
+                layer.msg("推送成功");
+                $("#sendModal").modal('hide');
             }
         }
     });
