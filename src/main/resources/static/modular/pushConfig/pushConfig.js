@@ -41,8 +41,9 @@ layui.use(['table','layedit'], function(){
     //初始化编辑器
     var index = PushConfig.layedit.build('noticeContent',{
         height:150,
-        // contenteditable:'false'
+        tool: ['left']
     });
+    $("#noticeContent").next().find('iframe').contents().find('body').prop("contenteditable",false);
     //监听行工具事件
     PushConfig.table.on('tool(tableId)', function(obj){
         if(obj.event === 'send'){
