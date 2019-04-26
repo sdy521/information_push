@@ -34,7 +34,7 @@ layui.use(['table','layedit'], function(){
         ,page: true
         ,done:function () {
             interval = setInterval(function () {
-                PushConfig.selectRedis();
+                PushConfig.selectRedis();0
             },3000);
         }
     });
@@ -44,34 +44,58 @@ layui.use(['table','layedit'], function(){
         tool: ['left']
     });
     $("#noticeContent").next().find('iframe').contents().find('body').prop("contenteditable",false);
+    //头工具栏事件
+    PushConfig.table.on('toolbar(tableId)', function(obj){
+        var checkStatus = PushConfig.table.checkStatus(obj.config.id);
+        if(obj.event === 'specifiedSend'){
+            var data = checkStatus.data;
+            if(data.length==0){
+                layer.msg("请选择要推送的用户");
+            }else{
+                var ids = "";
+                for(var i=0;i<data.length;i++){
+                    ids +=data[i].id+",";
+                }
+                $("#userid").val(ids.substring(0,ids.length-1));
+                PushConfig.sendModal(index);
+            }
+        }else {
+            $("#userid").val(0);
+            PushConfig.sendModal(index);
+        }
+    });
     //监听行工具事件
     PushConfig.table.on('tool(tableId)', function(obj){
         if(obj.event === 'send'){
             var data = obj.data;
             $("#userid").val(data.id);
-            $("#noticeId").empty();
-            $.ajax({
-                url:"/push_config/getNotice",
-                type:"GET",
-                dataType:"JSON",
-                success:function (r) {
-                    if(r.code===0){
-                        var data = r.data;
-                        var options="<option value=\"\">请选择公告</option>";
-                        for(var i=0;i<data.length;i++){
-                            options += "<option value=\""+data[i].id+"\">"+data[i].title+"</option>"
-                        }
-                        $("#noticeId").html(options);
-                        PushConfig.layedit.setContent(index,"请选择公告...");
-                        $("#sendModal").modal();
-                    }
-                }
-            });
+            PushConfig.sendModal(index);
         }
     });
     //获取公告内容
     PushConfig.getNoticeContent(index);
 });
+//推送弹窗
+PushConfig.sendModal = function(index){
+    $("#noticeId").empty();
+    $.ajax({
+        url:"/push_config/getNotice",
+        type:"GET",
+        dataType:"JSON",
+        success:function (r) {
+            if(r.code===0){
+                var data = r.data;
+                var options="<option value=\"\">请选择公告</option>";
+                for(var i=0;i<data.length;i++){
+                    options += "<option value=\""+data[i].id+"\">"+data[i].title+"</option>"
+                }
+                $("#noticeId").html(options);
+                PushConfig.layedit.setContent(index,"请选择公告...");
+                $("#sendModal").modal();
+            }
+        }
+    });
+}
 //获取公告内容
 PushConfig.getNoticeContent = function(index){
     $("#noticeId").change(function () {

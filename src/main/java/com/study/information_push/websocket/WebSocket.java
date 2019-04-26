@@ -95,10 +95,25 @@ public class WebSocket {
     public void GroupSending(String message){
         for (String name : webSocketSet.keySet()){
             try {
-                webSocketSet.get(name).session.getBasicRemote().sendText("service返回信息:"+message);
+                webSocketSet.get(name).session.getBasicRemote().sendText(message);
             }catch (Exception e){
                 e.printStackTrace();
             }
+        }
+    }
+
+    /**
+     * 指定多个发送
+     * @param nameList
+     * @param message
+     */
+    public void SpecifiedSending(List<String> nameList,String message){
+        try {
+            for (String name : nameList){
+                webSocketSet.get(name).session.getBasicRemote().sendText(message);
+            }
+        }catch (Exception e){
+            e.printStackTrace();
         }
     }
 

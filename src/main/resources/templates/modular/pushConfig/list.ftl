@@ -46,8 +46,12 @@
             <legend>在线人数：<strong>0</strong>人</legend>
         </fieldset>
         <table class="layui-hide" id="tableId" lay-filter="tableId"></table>
-        <script type="text/html" id="toolbarDemo"></script>
-
+        <script type="text/html" id="toolbarDemo">
+            <div class="layui-btn-container">
+                <button class="layui-btn layui-btn-sm" lay-event="specifiedSend">指定推送</button>
+                <button class="layui-btn layui-btn-sm" lay-event="groupSend">全体推送</button>
+            </div>
+        </script>
         <script type="text/html" id="rightTool">
             <a class="layui-btn layui-btn-xs" lay-event="send">推送</a>
         </script>

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -32,7 +33,18 @@ public class WsController {
         map.put("message",content);
         map.put("color",color);
         WebSocket webSocket = new WebSocket();
-        webSocket.AppointSending(userid, JSONObject.toJSONString(map));
+        if(userid.indexOf(",")!=-1){
+            //指定多个发送
+            webSocket.SpecifiedSending(Arrays.asList(userid.split(",")), JSONObject.toJSONString(map));
+        }else {
+            if(Integer.parseInt(userid)==0){
+                //全体发送
+                webSocket.GroupSending(JSONObject.toJSONString(map));
+            }else {
+                //单个发送
+                webSocket.AppointSending(userid, JSONObject.toJSONString(map));
+            }
+        }
         return new Result();
     }
 }
