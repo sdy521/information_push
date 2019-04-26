@@ -146,9 +146,10 @@ PushConfig.selectRedis = function(){
 PushConfig.send = function () {
     var userid = $("#userid").val();
     var content = $("#noticeId option:selected").text();
+    var noticeid = $("#noticeId").val();
     var radio = $("input:radio:checked").val();
     $.ajax({
-        url:"/ws/sendNotice?userid="+userid+"&content="+content+"&radio="+radio,
+        url:"/ws/sendNotice?userid="+userid+"&content="+content+"&radio="+radio+"&noticeid="+noticeid,
         type:"GET",
         dataType:"JSON",
         success:function (r) {
