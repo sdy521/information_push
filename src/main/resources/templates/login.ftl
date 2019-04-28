@@ -2,14 +2,14 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>登录页</title>
+    <title>Login</title>
     <link rel="stylesheet" href="/static/css/layui.css">
     <link rel="stylesheet" href="/static/css/style.css">
 </head>
 <body>
 
 <div class="login-main">
-    <header class="layui-elip">登录</header>
+    <header class="layui-elip">消息推送系统</header>
     <form class="layui-form" action="/j_spring_security_check" method="post">
         <div class="layui-input-inline">
             <input type="text" name="username" required lay-verify="required" placeholder="用户名" autocomplete="off"
