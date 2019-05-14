@@ -6,9 +6,9 @@ import com.study.information_push.dto.SystemDto;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 
 /**
@@ -24,44 +24,23 @@ public class SystemInfo {
     @ResponseBody
     public Result systemInfo(){
         SystemDto systemDto = new SystemDto();
+        StringBuilder v_result = new StringBuilder();
         try {
             Runtime rt = Runtime.getRuntime();
-            Process process = rt.exec("df -hl");
-            InputStreamReader isr = new InputStreamReader(process.getInputStream());
-            BufferedReader br = new BufferedReader(isr);
-            String str = null;
-            String[] strArray = null;
-            int line = 0;
-            while ((str = br.readLine()) != null) {
-                line++;
-                if (line != 2) {
-                    continue;
-                }
-                int m = 0;
-                strArray = str.split(" ");
-                for (String para : strArray) {
-                    if (para.trim().length() == 0)
-                        continue;
-                        ++m;
-                    if (para.endsWith("G") || para.endsWith("Gi")) {
-                        // 目前的服务器
-                        if (m == 2) {
-                            systemDto.setTotal(para);
-                        }
-                        if (m == 3) {
-                            systemDto.setUsed(para);
-                        }
-                    }
-                    if (para.endsWith("%")) {
-                        if (m == 5) {
-                            systemDto.setUse_rate(para);
-                        }
-                    }
-                }
+            Process process = rt.exec("systemctl status mysqld");
+            InputStream is = process.getInputStream();
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(is));
+            String line;
+            while ((line = bufferedReader.readLine())!=null){
+                v_result.append(line + "\n");
             }
-        } catch (IOException e) {
+            process.waitFor();
+            is.close();
+            bufferedReader.close();
+            process.destroy();
+        } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }
-        return new JSONResult(systemDto);
+        return new JSONResult(v_result);
     }
 }
